@@ -8,7 +8,7 @@ RUN npm install
 
 COPY client /app/client
 
-RUN npm build
+RUN npm run build
 
 FROM node:20
 
