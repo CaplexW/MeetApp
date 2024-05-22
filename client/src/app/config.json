@@ -1,0 +1,5 @@
+{
+    "apiEndpoint": "http://localhost:8080/api/",
+    "isFirebase": false,
+    "firebaseEndpoint": "https://meetapp-firebase-default-rtdb.europe-west1.firebasedatabase.app/"
+}
