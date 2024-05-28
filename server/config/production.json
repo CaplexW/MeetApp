@@ -1,6 +1,6 @@
 {
   "port": 8080,
-  "mongoUri": "mongodb://127.0.0.1:27017",
+  "mongoUri": "mongodb://185.175.16.29:27017/MeetApp",
   "accessPrivateKey": "It's@$ecrETK€y",
   "refreshPrivateKey": "It's@Refr€SHkEY"
 }
