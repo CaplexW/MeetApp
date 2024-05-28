@@ -9,7 +9,6 @@ import cors from 'cors';
 import { join } from 'path';
 import getPath from "./utils/getPath.js";
 
-// 192.144.14.101
 const app = express();
 const { __dirname } = getPath(import.meta);
 const PORT = config.get('port') ?? 8080;
@@ -31,7 +30,7 @@ async function start() {
     try {
         console.log(`Trying to connect MongoDB on URI ${config.get('mongoUri')}`);
         mongoose.connection.once('open', initDatabase);
-        await mongoose.connect(config.get('mongoUri'));
+        await mongoose.connect(config.get('secondUri'));
         console.log('Mongo DB connected!');
         app.listen(PORT, startUp);
     } catch(err) {
@@ -40,5 +39,6 @@ async function start() {
     }
 }
 async function sendIndex(req, res) {
-    res.sendFile(indexPath)
+    console.log('sending index page');
+    res.sendFile(indexPath);
 }
