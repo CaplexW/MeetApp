@@ -111,7 +111,6 @@ async function signInWithPassword(req, res) {
     }
 }
 async function token(req, res) {
-    console.log('token requested');
     try{
         const { refresh_token: refreshToken } = req.body;
         const data = tokenService.validateRefresh(refreshToken);
