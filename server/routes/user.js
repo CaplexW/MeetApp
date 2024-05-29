@@ -20,12 +20,13 @@ async function getUsersList(req, res) {
 }
 async function updateUser(req, res) {
     try {
-        if(req.params.id !== req.user._id) return sendAuthError(res);
+        const updateIsAuthorized = req?.params?.id === req?.user?._id;
+        if(!updateIsAuthorized) return sendAuthError(res);
 
         const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.send(updatedUser);
     } catch (e) {
-        console.log(e.message);
+        console.log('error:', e.message);
         serverError(res);
     }
 }

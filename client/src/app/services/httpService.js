@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
 import {
-  getAccessToken, getRefreshToken, getTokenExpiresDate, setTokents,
+  getAccessToken, getRefreshToken, getTokenExpiresDate, removeAuthData, setTokents,
 } from './localStorageService';
 import transformRefreshToken from '../utils/firebase/transformRefreshToken';
 import errorCatcher from '../utils/debug/errorCatcher';
@@ -51,12 +51,13 @@ http.interceptors.request.use(
       }
       const accessToken = getAccessToken();
       if (accessToken) {
-        config.headers = { ...config.headers, Authorization: `Bearer asfasfasf${accessToken}` };
+        config.headers = { ...config.headers, Authorization: `Bearer ${accessToken}` };
       }
     }
     return config;
   },
-  (error) => Promise.reject(error),
+  errorCatcher,
+  // (error) => Promise.reject(error), // TODO does it needed?
 );
 
 http.interceptors.response.use(
@@ -72,16 +73,20 @@ http.interceptors.response.use(
     return res;
   },
   (err) => {
-    const expected = (
-      err.response
-      && err.response.status >= 400
-      && err.response.status < 500
-    );
-    if (!expected) {
-      errorCatcher(err);
-    }
-    return Promise.reject(err);
+    if (err?.response?.status === 401) removeAuthData();
+    errorCatcher(err);
   },
+  // (err) => {
+  //   const expected = (
+  //     err.response
+  //     && err.response.status >= 400
+  //     && err.response.status < 500
+  //   );
+  //   if (!expected) {
+  //     errorCatcher(err);
+  //   }
+  //   return Promise.reject(err);
+  // },
 );
 
 const httpService = {

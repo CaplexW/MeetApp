@@ -8,10 +8,15 @@ export function checkAuth(req, res, next) {
         if (!token) return sendAuthError(res);
 
         const data = tokenService.validateAccess(token);
-        if (data) req.user = data;
+        if(data) req.user = data;
 
         next();
     } catch (e) {
-        res.status(401).json({ message: "Auth check failed" });
+        authCheckError();
+        console.log(e.message);
+    }
+
+    function authCheckError() {
+        res.status(401).json({ message: "Auth check failed!" })
     }
 }
