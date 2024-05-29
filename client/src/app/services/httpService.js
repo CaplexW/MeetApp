@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
-import configFile from '../config.json';
 import {
   getAccessToken, getRefreshToken, getTokenExpiresDate, setTokents,
 } from './localStorageService';
@@ -9,6 +8,7 @@ import errorCatcher from '../utils/debug/errorCatcher';
 import authService from './authService';
 // eslint-disable-next-line no-unused-vars
 import showElement from '../utils/debug/showElement';
+import { config as configFile } from '../config';
 
 const http = axios.create({
   baseURL: configFile.apiEndpoint,
@@ -51,7 +51,7 @@ http.interceptors.request.use(
       }
       const accessToken = getAccessToken();
       if (accessToken) {
-        config.headers = { ...config.headers, Authorization: `Bearer ${accessToken}` };
+        config.headers = { ...config.headers, Authorization: `Bearer asfasfasf${accessToken}` };
       }
     }
     return config;

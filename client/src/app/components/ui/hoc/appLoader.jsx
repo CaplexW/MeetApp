@@ -12,6 +12,8 @@ export default function AppLoader({ children }) {
   const isUsersLoaded = useSelector(getUsersDataStatus());
   const dispatch = useDispatch();
 
+  showElement(isLogged, 'isLogged');
+
   useEffect(loadData, [isLogged]);
   function loadData() {
     dispatch(loadProfessions());

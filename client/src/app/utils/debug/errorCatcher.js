@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import displayError from '../clientMessages/displayError';
 import createErrorMessage from './createErrorMessage';
 

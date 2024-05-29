@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import showElement from './showElement';
 
 /* eslint-disable no-use-before-define */
@@ -8,7 +9,7 @@ export default function createErrorMessage(err) {
     errorMessage = determineError(code, message);
   } else if (typeof err.code === 'string') {
     const { status, data } = err.response;
-    errorMessage = determineError(status, data.error);
+    errorMessage = determineError(status, data.error || data.message);
   } else if (err.message && typeof err.message === 'string') {
     errorMessage = `unexpepected error: ${err.message}`;
   }

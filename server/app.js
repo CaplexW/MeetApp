@@ -30,7 +30,7 @@ async function start() {
     try {
         console.log(`Trying to connect MongoDB on URI ${config.get('mongoUri')}`);
         mongoose.connection.once('open', initDatabase);
-        await mongoose.connect(config.get('secondUri'));
+        await mongoose.connect(config.get('mongoUri'));
         console.log('Mongo DB connected!');
         app.listen(PORT, startUp);
     } catch(err) {

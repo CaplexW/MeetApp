@@ -2,7 +2,7 @@ import axios from 'axios';
 // eslint-disable-next-line no-unused-vars
 import showElement from '../utils/debug/showElement';
 import { getRefreshToken } from './localStorageService';
-import config from '../config.json';
+import { config } from '../config';
 
 // firebase baseURL: 'https://identitytoolkit.googleapis.com/v1/'
 const httpAuthConfig = {
