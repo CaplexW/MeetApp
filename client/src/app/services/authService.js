@@ -3,6 +3,7 @@ import axios from 'axios';
 import showElement from '../utils/debug/showElement';
 import { getRefreshToken } from './localStorageService';
 import { config } from '../config';
+import errorCatcher from '../utils/debug/errorCatcher';
 
 // firebase baseURL: 'https://identitytoolkit.googleapis.com/v1/'
 const httpAuthConfig = {
@@ -16,6 +17,8 @@ const httpAuth = axios.create(httpAuthConfig);
 const signUpEndpoint = 'signUp';
 const singInEndpoint = 'signInWithPassword';
 const tokenUrl = 'token';
+
+httpAuth.interceptors.response.use(passOnResponse, errorCatcher);
 // fireBase tokenUrl = `https://securetoken.googleapis.com/v1/token?key=${process.env.REACT_APP_FIREBASE_KEY}`
 const authService = {
   async register(payload) {
@@ -38,3 +41,7 @@ const authService = {
 };
 
 export default authService;
+
+function passOnResponse(response) {
+  return response;
+}

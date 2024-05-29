@@ -59,35 +59,7 @@ http.interceptors.request.use(
   errorCatcher,
   // (error) => Promise.reject(error), // TODO does it needed?
 );
-
-http.interceptors.response.use(
-  // Напоминалка!
-  // Здесь мы перехватывает ответ и в случае, если используется Firebase,
-  // то трансформируем данные из ответа в соответствии с определенным стандартом.
-  (res) => {
-    if (configFile.isFirebase) {
-      res.data = { content: transformData(res.data) };
-    } else {
-      res.data = { content: res.data };
-    }
-    return res;
-  },
-  (err) => {
-    if (err?.response?.status === 401) removeAuthData();
-    errorCatcher(err);
-  },
-  // (err) => {
-  //   const expected = (
-  //     err.response
-  //     && err.response.status >= 400
-  //     && err.response.status < 500
-  //   );
-  //   if (!expected) {
-  //     errorCatcher(err);
-  //   }
-  //   return Promise.reject(err);
-  // },
-);
+http.interceptors.response.use(checkIfFirebase, errorCatcher);
 
 const httpService = {
   get: http.get,
@@ -101,5 +73,15 @@ function transformData(data) {
   if (data && !data._id) return Object.values(data);
   return data;
 }
-
+function checkIfFirebase(response) {
+  // Напоминалка!
+  // Здесь мы перехватывает ответ и в случае, если используется Firebase,
+  // то трансформируем данные из ответа в соответствии с определенным стандартом.
+  if (configFile.isFirebase) {
+    response.data = { content: transformData(response.data) };
+  } else {
+    response.data = { content: response.data };
+  }
+  return response;
+}
 export default httpService;
