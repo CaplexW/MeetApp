@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
 import {
-  getAccessToken, getRefreshToken, getTokenExpiresDate, removeAuthData, setTokents,
+  getAccessToken, getRefreshToken, getTokenExpiresDate, setTokents,
 } from './localStorageService';
 import transformRefreshToken from '../utils/firebase/transformRefreshToken';
 import errorCatcher from '../utils/debug/errorCatcher';
@@ -57,7 +57,6 @@ http.interceptors.request.use(
     return config;
   },
   errorCatcher,
-  // (error) => Promise.reject(error), // TODO does it needed?
 );
 http.interceptors.response.use(checkIfFirebase, errorCatcher);
 

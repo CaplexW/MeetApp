@@ -5,7 +5,7 @@ import Devider from '../common/divider';
 import Form from '../common/form';
 import TextAreaInput from '../common/form/textAreaInput';
 
-export default function AddCommentForm({ onSubmit }) {
+export default function AddCommentForm({ onSubmit, isGuest }) {
   const validatorConfig = {
     text: {
       isRequired: {
@@ -21,6 +21,7 @@ export default function AddCommentForm({ onSubmit }) {
     onSubmit(comment);
   }
 
+  if (isGuest) return '';
   return (
     <div id="add-comment-card" className="card mb-2">
       <div className="card-body">
@@ -37,4 +38,8 @@ export default function AddCommentForm({ onSubmit }) {
 
 AddCommentForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
+  isGuest: PropTypes.bool,
+};
+AddCommentForm.defaultProps = {
+  isGuest: false,
 };

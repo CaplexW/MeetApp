@@ -5,7 +5,6 @@ import { getLoginStatus, getUsersDataStatus, loadUsers } from '../../../store/us
 import { loadQualities } from '../../../store/qualities';
 import { loadProfessions } from '../../../store/professions';
 import Loader from '../../common/loader';
-import showElement from '../../../utils/debug/showElement';
 
 export default function AppLoader({ children }) {
   const isLogged = useSelector(getLoginStatus());

@@ -23,7 +23,7 @@ export default function Login() {
     dispatch(loadProfessions());
   }
   function redirectAuthedUser() {
-    if (currentUser) navigate('/');
+    if (currentUser) navigate('/users');
   }
 
   return (

@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // Компоненты
-import Users from './layouts/users';
 import MainPage from './layouts/main';
 import Login from './layouts/login';
 import NavBar from './components/ui/navBar';
@@ -16,6 +15,7 @@ import UsersListPage from './components/pages/usersListPage';
 import UserPage from './components/pages/userPage';
 import UserEditPage from './components/pages/userPage/userEditPage';
 import UserBookmarksPage from './components/pages/userPage/userBookmarksPage';
+import DeleteAccount from './layouts/deleteAccount';
 
 export default function App() {
   return (
@@ -34,6 +34,7 @@ export default function App() {
             </Route>
           </Route>
           <Route path="/logout" Component={LogOut} />
+          <Route path="/deleteAccount" Component={DeleteAccount} />
           <Route path="/404" Component={NotFoundPage} />
           <Route path="*" element={<Navigate to="/404" />} />
         </Routes>

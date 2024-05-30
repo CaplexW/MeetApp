@@ -15,6 +15,7 @@ import { getQualities, getQualitiesLoadingStatus } from '../../store/qualities';
 import Loader from '../common/loader';
 import { getProfessions, getProfessionsLoadingStatus } from '../../store/professions';
 import { signUp } from '../../store/users';
+import createUserAvatar from '../../utils/createUserAvatar';
 
 export default function RegisterForm() {
   const defaultData = {
@@ -76,9 +77,6 @@ export default function RegisterForm() {
     setLoading((qualitiesIsLoading || professionsIsLoading));
   }
 
-  function createUserAvatar(seed) {
-    return `https://api.dicebear.com/8.x/avataaars/svg?seed=${seed}.svg`;
-  }
   async function handleSubmit(data) {
     const newUser = {
       email: data.email,
