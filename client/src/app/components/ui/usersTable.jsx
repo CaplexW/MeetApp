@@ -79,5 +79,5 @@ UsersTable.propTypes = {
   onFilter: PropTypes.func,
 };
 UsersTable.defaultProps = {
-  onFilter: () => {},
+  onFilter: () => { },
 };

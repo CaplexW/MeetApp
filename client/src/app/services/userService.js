@@ -24,6 +24,10 @@ const userService = {
     const { data } = await httpService.get(userEndpoint + userId);
     return data;
   },
+  async remove(userId) {
+    const response = await httpService.delete(userEndpoint + userId);
+    return response;
+  },
 };
 
 export default userService;

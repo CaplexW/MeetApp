@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { nanoid } from 'nanoid';
 import AddCommentForm from './addCommetnForm';
 import CommentsList from './commentsList';
 import {
@@ -10,12 +9,14 @@ import {
 } from '../../store/comments';
 import { getCurrentUser } from '../../store/users';
 import showElement from '../../utils/debug/showElement';
+import { striderProf } from '../../constants/guest';
 
 export default function Comments() {
   const dispatch = useDispatch();
   const { userId } = useParams();
   const comments = useSelector(getComments());
   const currentUser = useSelector(getCurrentUser());
+  const isGuest = currentUser.profession === striderProf;
 
   useEffect(() => { dispatch(loadComments(userId)); }, [userId]);
 
@@ -32,9 +33,10 @@ export default function Comments() {
     };
     dispatch(createComment(comment));
   }
+
   return (
     <>
-      <AddCommentForm onSubmit={handleAddComment} />
+      <AddCommentForm onSubmit={handleAddComment} isGuest={isGuest} />
       <CommentsList comments={comments} onDelete={handleDeleteComment} />
     </>
   );

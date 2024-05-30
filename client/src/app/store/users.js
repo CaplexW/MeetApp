@@ -67,6 +67,13 @@ const sliceConfig = {
     bookmarkFailed(state, action) {
       state.error = action.payload;
     },
+    removeRequested() { },
+    removeSucceed(state, { payload }) {
+      state.entities = state.entities.filter((user) => user._id !== payload._id);
+    },
+    removeFailed(state, action) {
+      state.error = action.payload;
+    },
   },
 };
 
@@ -81,15 +88,15 @@ const {
   authRequestFailed,
   userLoggedOut,
   userLogoutFailed,
-  // createRequested,
-  // createRequestFailed,
-  // createRequestSucceed,
   updateRequested,
   updateRequestFailed,
   updateSucceed,
   bookmarkRequested,
   bookmarkSucceed,
   bookmarkFailed,
+  removeRequested,
+  removeSucceed,
+  removeFailed,
 } = actions;
 
 export function loadUsers() {
@@ -207,19 +214,21 @@ export function addBookmark(markingUserId) {
     }
   };
 }
+export function removeUser(userId) {
+  return async function removeUserDispatch(dispatch) {
+    dispatch(removeRequested());
 
-// function createUser(data) {
-//   return async (dispatch) => {
-//     dispatch(createRequested());
-//
-//     try {
-//       const { content } = await userService.create(data);
-//       dispatch(createRequestSucceed(content));
-//     } catch (err) {
-//       dispatch(createRequestFailed(err.message));
-//     }
-//   };
-// }
+    try {
+      const result = await userService.remove(userId);
+      if (result.status === 200) dispatch(removeSucceed({ userId }));
+      return result;
+    } catch (error) {
+      dispatch(removeFailed());
+      return 'error!';
+    }
+  };
+}
+
 function initState() {
   if (getAccessToken()) {
     return {

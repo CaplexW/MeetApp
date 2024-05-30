@@ -1,8 +1,5 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-restricted-syntax */
-
-import showElement from './debug/showElement';
-
 /* eslint-disable guard-for-in */
 export default function validator(data, config) {
   const errors = {};

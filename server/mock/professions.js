@@ -38,5 +38,9 @@ export const professionsMock = [
 {
     "_id": "67rdca3eeb7f6fgeed481819",
     "name": "Политик"
+  },
+{
+    "_id": "6657426c8387ca30d310f0ee",
+    "name": "Бродяга"
   }
 ]
