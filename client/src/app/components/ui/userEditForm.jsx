@@ -11,6 +11,7 @@ import { sexOptions } from '../../constants';
 import { professionScheme, qualityScheme, userScheme } from '../../mockData/propTypesScheme';
 import { getQualitiesByIds } from '../../store/qualities';
 import { updateUser } from '../../store/users';
+import { striderProf } from '../../constants/guest';
 
 export default function UserEditForm({ user, professions, qualities }) {
   const dispatch = useDispatch();
@@ -61,6 +62,8 @@ export default function UserEditForm({ user, professions, qualities }) {
       },
     },
   };
+  const isGuest = user.profession === striderProf;
+  const defaultOption = isGuest ? 'Бродяга' : 'Выберете профессию';
 
   function handleSubmit(data) {
     const updatingUser = { ...user };
@@ -83,7 +86,7 @@ export default function UserEditForm({ user, professions, qualities }) {
         <SelectInput
           name="profession"
           label="Профессия"
-          defaultOption="Выберете профессию"
+          defaultOption={defaultOption}
           options={professions}
         />
         <MultiSelectInput

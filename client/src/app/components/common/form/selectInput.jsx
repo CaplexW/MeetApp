@@ -14,6 +14,7 @@ function SelectInput({
   defaultOption,
 }) {
   const selectClass = `form-select mt-1 w-100 ${error ? 'is-invalid' : ' '}`;
+  const isGuest = defaultOption === 'Бродяга';
 
   function normolizeOptions() {
     if (typeof (options) === 'object') {
@@ -51,6 +52,7 @@ function SelectInput({
             name={name}
             value={value}
             onChange={handleChange}
+            disabled={isGuest}
           >
             <option id="default-option" key="defaultOption" value="default-option">
               {defaultOption}
