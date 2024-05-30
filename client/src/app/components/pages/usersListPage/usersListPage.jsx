@@ -17,7 +17,6 @@ import Loader from '../../common/loader';
 import { getProfessions, getProfessionsLoadingStatus } from '../../../store/professions';
 import {
   addBookmark, getCurrentUser, getUsers, getUsersLoadingStatus,
-  updateUser,
 } from '../../../store/users';
 import { striderProf } from '../../../constants/guest';
 
@@ -34,7 +33,6 @@ export default function UsersListPage() {
   const usersIsLoading = useSelector(getUsersLoadingStatus());
   const currentUser = useSelector(getCurrentUser());
   const profIsLoading = useSelector(getProfessionsLoadingStatus());
-  showElement(currentUser, 'currentUser');
 
   const pageSize = 7;
   const filteredUsers = filterUsers();

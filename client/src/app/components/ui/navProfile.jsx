@@ -26,6 +26,7 @@ export default function NavProfile() {
     const result = confirm('Вы хотите удалить свой аккаунт? Это действие необратимо.');
     if (result) {
       const password = prompt('Тогда введите свой пароль');
+      if (!password) return;
       const isPassValid = await bcrypt.compare(password, currentUser.password);
       if (isPassValid) {
         redirectTo('/deleteAccount');

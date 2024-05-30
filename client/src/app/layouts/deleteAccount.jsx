@@ -2,14 +2,17 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/common/loader';
-import { getCurrentUser, logOut, removeUser } from '../store/users';
+import {
+  getCurrentUser, getLoginStatus, logOut, removeUser,
+} from '../store/users';
 
 export default function DeleteAccount() {
-  const dispatch = useDispatch();
+  const isLogged = useSelector(getLoginStatus());
   const redirectTo = useNavigate();
+  const dispatch = useDispatch();
   const currentUser = useSelector(getCurrentUser());
 
-  useEffect(() => { deletingAccount(); }, []);
+  useEffect(() => { if (isLogged) deletingAccount(); redirectTo('/'); }, []);
   async function deletingAccount() {
     const response = await dispatch(removeUser(currentUser._id));
     if (response.statusText === 'OK') {
