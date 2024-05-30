@@ -2,25 +2,22 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/common/loader';
-import { getCurrentUser, logOut } from '../store/users';
-import { striderProf } from '../constants/guest';
+import { getCurrentUser, logOut, removeUser } from '../store/users';
 
-export default function LogOut() {
+export default function DeleteAccount() {
   const dispatch = useDispatch();
   const redirectTo = useNavigate();
   const currentUser = useSelector(getCurrentUser());
 
-  useEffect(() => { loggingOut(); }, []);
-  async function loggingOut() {
-    const isGuest = currentUser.profession === striderProf;
-    if (isGuest) {
-      redirectTo('/deleteAccount');
-    } else {
+  useEffect(() => { deletingAccount(); }, []);
+  async function deletingAccount() {
+    const response = await dispatch(removeUser(currentUser._id));
+    if (response.statusText === 'OK') {
       const result = await dispatch(logOut());
       if (result === 'success') redirectTo('/');
     }
   }
 
-  const loaderReason = 'logging out';
+  const loaderReason = 'deleting account...';
   return <Loader reason={loaderReason} />;
 }

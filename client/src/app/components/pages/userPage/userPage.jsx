@@ -25,7 +25,7 @@ export default function User() {
 
   useEffect(() => { setLoading(Boolean(!user)); }, [user]);
 
-  const loaderReason = 'user in userPage is loading'; // TODO delete after debug is finished
+  const loaderReason = 'user in userPage is loading';
   if (isLoading) return <Loader reason={loaderReason} />;
   if (edit) return isPageOwner ? <UserEditPage user={user} /> : <Navigate to={editPath} />;
   return (

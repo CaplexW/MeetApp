@@ -19,6 +19,7 @@ import {
   addBookmark, getCurrentUser, getUsers, getUsersLoadingStatus,
   updateUser,
 } from '../../../store/users';
+import { striderProf } from '../../../constants/guest';
 
 export default function UsersListPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,6 +34,7 @@ export default function UsersListPage() {
   const usersIsLoading = useSelector(getUsersLoadingStatus());
   const currentUser = useSelector(getCurrentUser());
   const profIsLoading = useSelector(getProfessionsLoadingStatus());
+  showElement(currentUser, 'currentUser');
 
   const pageSize = 7;
   const filteredUsers = filterUsers();
@@ -91,7 +93,9 @@ export default function UsersListPage() {
         result = filterUsersByProfOrQual();
       }
 
-      return result.filter((user) => user._id !== currentUser._id);
+      return result.filter(
+        (user) => (user._id !== currentUser._id) && (user.profession !== striderProf),
+      );
     }
 
     return null;

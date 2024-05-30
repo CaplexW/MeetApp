@@ -33,7 +33,7 @@ const authService = {
   },
   async refresh() {
     const { data } = await httpAuth.post(tokenUrl, {
-      grant_type: 'refresh_token', // TODO is string correct?
+      grant_type: 'refresh_token',
       refresh_token: getRefreshToken(),
     });
     return data;

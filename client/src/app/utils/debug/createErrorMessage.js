@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import showElement from './showElement';
 
-/* eslint-disable no-use-before-define */
 export default function createErrorMessage(err) {
   let errorMessage;
   if (typeof err.code === 'number') {
@@ -9,7 +8,7 @@ export default function createErrorMessage(err) {
     errorMessage = determineError(code, message);
   } else if (typeof err.code === 'string') {
     const { status, data } = err.response;
-    errorMessage = determineError(status, data.error || data.message);
+    errorMessage = determineError(status, data.error.message || data.error || data.message);
   } else if (err.message && typeof err.message === 'string') {
     errorMessage = `unexpepected error: ${err.message}`;
   }
@@ -25,8 +24,10 @@ function determineError(code, message) {
       };
       return 'Пользователь с таким email уже существует';
     }
-    if (message === 'INVALID_LOGIN_CREDENTIALS') {
-      const emailExistsError = {
+    if (message === 'INVALID_LOGIN_CREDENTIALS'
+    || message === 'PASSWORD_IS_INVALID'
+    || message === 'EMAIL_NOT_FOUND') {
+      const invalidCredentials = {
         email: 'Неверный логин или пароль',
         password: 'Неверный логин или пароль',
       };

@@ -14,7 +14,6 @@ export default async function initDatabase() {
 
     if (!isProfOk) await createInitialEntity(Profession, professionsMock);
     if (!isQualOk) await createInitialEntity(Quality, qualitiesMock);
-
 }
 
 async function createInitialEntity(Model, mock) {

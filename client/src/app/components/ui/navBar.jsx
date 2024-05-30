@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 // eslint-disable-next-line no-unused-vars
 import { useSelector } from 'react-redux';
 import NavProfile from './navProfile';
@@ -21,7 +21,7 @@ export default function NavBar() {
                 aria-current="page"
                 to="/"
               >
-                Home
+                Главная
               </NavLink>
             </li>
             <li id="users-or-login-page" className="nav-item">
@@ -31,7 +31,7 @@ export default function NavBar() {
                   aria-current="page"
                   to="users"
                 >
-                  Users
+                  Компания
                 </NavLink>
               ) : ''}
             </li>
@@ -39,13 +39,13 @@ export default function NavBar() {
         </div>
         <div className="d-flex">
           {currentUser ? <NavProfile /> : (
-            <Link
-              className="nav-link"
+            <NavLink
+              className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
               aria-current="page"
               to="/login"
             >
-              Login
-            </Link>
+              Войти
+            </NavLink>
           )}
         </div>
       </div>
