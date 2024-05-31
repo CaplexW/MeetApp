@@ -1,2 +1,2 @@
-export const striderProf = '665749f7a7f8d85e5ebe6def';
+export const striderProf = '665970b9e8b0a71444860b6f';
 export const striderName = 'Случайный прохожий';

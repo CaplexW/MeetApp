@@ -12,12 +12,12 @@ export default function LogOut() {
 
   useEffect(() => { loggingOut(); }, []);
   async function loggingOut() {
-    const isGuest = currentUser.profession === striderProf;
+    const isGuest = currentUser?.profession === striderProf;
     if (isGuest) {
       redirectTo('/deleteAccount');
     } else {
-      const result = await dispatch(logOut());
-      if (result === 'success') redirectTo('/');
+      dispatch(logOut());
+      redirectTo('/');
     }
   }
 

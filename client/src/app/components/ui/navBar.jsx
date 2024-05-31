@@ -12,7 +12,7 @@ export default function NavBar() {
   const currentUser = useSelector(getCurrentUser());
   return (
     <nav className="navbar bg-body-tertiary row gutter-md p-3 d-flex justify-content-between">
-      <div id="main" className="col-md-1 align-items-center d-flex justify-content-center ms-1 my-1">
+      <div id="main" className="col-md-1 align-items-center d-flex justify-content-center ms-4 my-1">
         <NavLink
           className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
           aria-current="page"
@@ -33,7 +33,7 @@ export default function NavBar() {
         ) : ''}
       </div>
       <div id="space" className="col-md-7" />
-      <div id="right-side" className="col-md-2 d-flex align-items-end justify-content-end me-5">
+      <div id="right-side" className="col-md-2 d-flex align-items-end justify-content-end">
         {currentUser ? <NavProfile /> : (
           <NavLink
             className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}

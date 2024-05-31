@@ -12,8 +12,8 @@ export default async function initDatabase() {
     const isProfOk = professions.length === professionsMock.length;
     const isQualOk = qualities.length === qualitiesMock.length;
 
-    if (!isProfOk) await createInitialEntity(Profession, professionsMock);
-    if (!isQualOk) await createInitialEntity(Quality, qualitiesMock);
+    // if (!isProfOk) await createInitialEntity(Profession, professionsMock);
+    // if (!isQualOk) await createInitialEntity(Quality, qualitiesMock);
 }
 
 async function createInitialEntity(Model, mock) {
