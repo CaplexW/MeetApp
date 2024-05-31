@@ -33,7 +33,7 @@ export default function NavBar() {
         ) : ''}
       </div>
       <div id="space" className="col-md-7" />
-      <div id="right-side" className="col-md-2 d-flex align-items-end justify-content-end">
+      <div id="right-side" className="col-md-2 d-flex align-items-end justify-content-end mx-5">
         {currentUser ? <NavProfile /> : (
           <NavLink
             className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}

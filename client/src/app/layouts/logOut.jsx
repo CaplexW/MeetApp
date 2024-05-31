@@ -16,8 +16,8 @@ export default function LogOut() {
     if (isGuest) {
       redirectTo('/deleteAccount');
     } else {
-      dispatch(logOut());
       redirectTo('/');
+      dispatch(logOut());
     }
   }
 
