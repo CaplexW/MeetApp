@@ -8,56 +8,13 @@ import errorCatcher from '../utils/debug/errorCatcher';
 import authService from './authService';
 // eslint-disable-next-line no-unused-vars
 import showElement from '../utils/debug/showElement';
-import { config as configFile } from '../config';
+import { config } from '../config';
 
 const http = axios.create({
-  baseURL: configFile.apiEndpoint,
+  baseURL: config.apiEndpoint,
 });
 
-http.interceptors.request.use(
-  async (config) => {
-    const expiresDate = getTokenExpiresDate();
-    const refreshToken = getRefreshToken();
-    const tokenIsExpired = refreshToken && expiresDate < Date.now();
-
-    // Напоминалка!
-    // В Firebase необходимо подать url с .json на конце.
-    // Посколько все пути в конфиге заканчиваются на слеш и никогда на .json,
-    // то в данном куске мы перехватываем запрос и если в конфиге используются Firebase,
-    // то вырезаем слеш и добавляем .json.
-    if (configFile.isFirebase) {
-      const containSlash = /\/$/gi.test(config.url);
-      config.url = `${containSlash ? config.url.slice(0, -1) : config.url}.json`;
-      if (tokenIsExpired) {
-        const data = await authService.refresh();
-        try {
-          setTokents(transformRefreshToken(data));
-        } catch (err) {
-          errorCatcher(err);
-        }
-      }
-      const accessToken = getAccessToken();
-      if (accessToken) {
-        config.params = { ...config.params, auth: accessToken };
-      }
-    } else {
-      if (tokenIsExpired) {
-        const data = await authService.refresh();
-        try {
-          setTokents(data);
-        } catch (err) {
-          errorCatcher(err);
-        }
-      }
-      const accessToken = getAccessToken();
-      if (accessToken) {
-        config.headers = { ...config.headers, Authorization: `Bearer ${accessToken}` };
-      }
-    }
-    return config;
-  },
-  errorCatcher,
-);
+http.interceptors.request.use(modifyRequest, errorCatcher);
 http.interceptors.response.use(checkIfFirebase, errorCatcher);
 
 const httpService = {
@@ -76,11 +33,53 @@ function checkIfFirebase(response) {
   // Напоминалка!
   // Здесь мы перехватывает ответ и в случае, если используется Firebase,
   // то трансформируем данные из ответа в соответствии с определенным стандартом.
-  if (configFile.isFirebase) {
+  if (config.isFirebase) {
     response.data = { content: transformData(response.data) };
   } else {
     response.data = { content: response.data };
   }
   return response;
 }
+async function modifyRequest(request) {
+  const expiresDate = getTokenExpiresDate();
+  const refreshToken = getRefreshToken();
+  const tokenIsExpired = refreshToken && expiresDate < Date.now();
+
+  // Напоминалка!
+  // В Firebase необходимо подать url с .json на конце.
+  // Посколько все пути в конфиге заканчиваются на слеш и никогда на .json,
+  // то в данном куске мы перехватываем запрос и если в конфиге используются Firebase,
+  // то вырезаем слеш и добавляем .json.
+  if (config.isFirebase) {
+    const containSlash = /\/$/gi.test(request.url);
+    request.url = `${containSlash ? request.url.slice(0, -1) : request.url}.json`;
+    if (tokenIsExpired) {
+      const data = await authService.refresh();
+      try {
+        setTokents(transformRefreshToken(data));
+      } catch (err) {
+        errorCatcher(err);
+      }
+    }
+    const accessToken = getAccessToken();
+    if (accessToken) {
+      request.params = { ...request.params, auth: accessToken };
+    }
+  } else {
+    if (tokenIsExpired) {
+      const data = await authService.refresh();
+      try {
+        setTokents(data);
+      } catch (err) {
+        errorCatcher(err);
+      }
+    }
+    const accessToken = getAccessToken();
+    if (accessToken) {
+      request.headers = { ...request.headers, Authorization: `Bearer ${accessToken}` };
+    }
+  }
+  return request;
+}
+
 export default httpService;

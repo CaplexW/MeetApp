@@ -61,7 +61,9 @@ export function getQualities() {
   };
 }
 export function getQualitiesByIds(ids) {
-  return ({ qualities }) => qualities.entities?.filter((q) => ids.includes(q._id));
+  return function findQualities(state) {
+    return state.qualities.entities?.filter((q) => ids.includes(q._id));
+  };
 }
 export function getQualitiesLoadingStatus() {
   return function getIsLoading(state) {

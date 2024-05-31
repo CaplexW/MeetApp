@@ -5,7 +5,8 @@ import sendAuthError from "../utils/sendAuthError.js";
 import {checkAuth} from "../middleware/auth.middleware.js";
 import { striderProf } from "../constants/guest.js";
 import Token from "../models/Token.js";
-import Comment from '../models/Comment.js';
+import tokenService from "../services/tokenService.js";
+import removeComments from "../utils/removeComments.js";
 
 const router = express.Router({ mergeParams: true });
 
@@ -43,7 +44,7 @@ async function removeUser(req, res) {
         if (!isPermitted) return sendAuthError(res);
 
         await User.findByIdAndDelete(removingUser._id);
-        await removeTokens(removingUser._id);
+        await tokenService.removeTokens(removingUser._id);
         await removeComments(removingUser._id);
 
         return res.send(null);
@@ -53,20 +54,5 @@ async function removeUser(req, res) {
     }
 }
 
-async function removeTokens(userId) {
-    await Token.findOneAndDelete({ user: userId });
-}
-async function removeComments(userId) {
-    let i = true;
-    let y = true;
-    while (i === true) {
-        const result = await Comment.findOneAndDelete({ userId });
-        if (!result) i = false;
-    };
-    while (y === true) {
-        const result = await Comment.findOneAndDelete({ pageId: userId });
-        if (!result) y = false;
-    };
-}
 
 export default router;

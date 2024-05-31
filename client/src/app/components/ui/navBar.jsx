@@ -11,43 +11,38 @@ import { getCurrentUser } from '../../store/users';
 export default function NavBar() {
   const currentUser = useSelector(getCurrentUser());
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-      <div className="container-fluid">
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
-            <li id="home-page" className="nav-item">
-              <NavLink
-                className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
-                aria-current="page"
-                to="/"
-              >
-                Главная
-              </NavLink>
-            </li>
-            <li id="users-or-login-page" className="nav-item">
-              {currentUser ? (
-                <NavLink
-                  className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
-                  aria-current="page"
-                  to="users"
-                >
-                  Компания
-                </NavLink>
-              ) : ''}
-            </li>
-          </ul>
-        </div>
-        <div className="d-flex">
-          {currentUser ? <NavProfile /> : (
-            <NavLink
-              className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
-              aria-current="page"
-              to="/login"
-            >
-              Войти
-            </NavLink>
-          )}
-        </div>
+    <nav className="navbar bg-body-tertiary row gutter-md p-3 d-flex justify-content-between">
+      <div id="main" className="col-md-1 align-items-center d-flex justify-content-center ms-1 my-1">
+        <NavLink
+          className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
+          aria-current="page"
+          to="/"
+        >
+          Главная
+        </NavLink>
+      </div>
+      <div id="users" className="col-md-1  align-items-center d-flex justify-content-center my-1">
+        {currentUser ? (
+          <NavLink
+            className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
+            aria-current="page"
+            to="users"
+          >
+            Компания
+          </NavLink>
+        ) : ''}
+      </div>
+      <div id="space" className="col-md-7" />
+      <div id="right-side" className="col-md-2 d-flex align-items-end justify-content-end me-5">
+        {currentUser ? <NavProfile /> : (
+          <NavLink
+            className={({ isActive }) => (isActive ? 'nav-link navbar-brand' : 'nav-link')}
+            aria-current="page"
+            to="/login"
+          >
+            Войти
+          </NavLink>
+        )}
       </div>
     </nav>
   );
