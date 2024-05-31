@@ -44,7 +44,7 @@ export default function LoginForm() {
     if (prevLocation) {
       redirectTo(prevLocation);
     } else {
-      redirectTo('/');
+      redirectTo('/users');
     }
   }
   function handleSubmit(data) {

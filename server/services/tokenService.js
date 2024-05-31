@@ -25,6 +25,9 @@ class TokenService {
             return null;
         }
     };
+    async removeTokens(userId) {
+        await Token.findOneAndDelete({ user: userId });
+    };
     validateRefresh(refreshToken) {
       try {
         return jsonwebtoken.verify(refreshToken, config.get('refreshPrivateKey'));

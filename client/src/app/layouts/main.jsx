@@ -33,12 +33,12 @@ export default function MainPage() {
 
   if (isLogged) return <Link to="/users"><button className="btn btn-primary m-5" type="button">Найти компанию!</button></Link>;
   return (
-    <div className="card m-5">
-      {/* <h1 className="mx-5 my-3">Найди себе компанию!</h1> */}
+    <div className="row gutter-md p-3">
+      <h1 className="mx-5 my-3">Найди себе компанию!</h1>
       <div className="m-5">
-        <Link to="/login"><button className="btn btn-primary me-4" type="button">Войти</button></Link>
-        <Link to="/login/register"><button className="btn btn-primary ms-4" type="button">Зарегестрироваться</button></Link>
-        <button className="btn btn-info m-1 ms-5" disabled={clicked} onClick={activeGuestMode} type="button">Осмотреться</button>
+        <Link to="/login"><button className="btn btn-primary col-md-1 m-1" type="button">Войти</button></Link>
+        <Link to="/login/register"><button className="btn btn-primary col-md-3 m-1" type="button">Зарегестрироваться</button></Link>
+        <button className="btn btn-info col-md-2 m-1" disabled={clicked} onClick={activeGuestMode} type="button">Осмотреться</button>
       </div>
     </div>
   );

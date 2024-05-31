@@ -92,7 +92,7 @@ export default function UsersListPage() {
       }
 
       return result.filter(
-        (user) => (user._id !== currentUser._id) && (user.profession !== striderProf),
+        (user) => (user._id !== currentUser?._id) && (user.profession !== striderProf),
       );
     }
 

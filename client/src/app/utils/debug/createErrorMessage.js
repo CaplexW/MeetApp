@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { removeAuthData } from '../../services/localStorageService';
 import showElement from './showElement';
 
 export default function createErrorMessage(err) {
@@ -7,11 +8,13 @@ export default function createErrorMessage(err) {
     const { code, message } = err.response.data.error;
     errorMessage = determineError(code, message);
   } else if (typeof err.code === 'string') {
+    showElement(err.response, 'err.response');
     const { status, data } = err.response;
-    errorMessage = determineError(status, data.error.message || data.error || data.message);
+    errorMessage = determineError(status, data.error?.message || data.error || data.message);
   } else if (err.message && typeof err.message === 'string') {
     errorMessage = `unexpepected error: ${err.message}`;
   }
+  if (errorMessage === 'Пользователь не существует') removeAuthData();
   if (errorMessage) return errorMessage;
   return { error: 'no message catched!' };
 }

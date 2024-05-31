@@ -8,7 +8,7 @@ export const userScheme = {
   image: PropTypes.string.isRequired,
   rate: PropTypes.number.isRequired,
   completedMeetings: PropTypes.number.isRequired,
-  bookmark: PropTypes.bool,
+  bookmark: PropTypes.arrayOf(PropTypes.string),
   profession: PropTypes.string.isRequired,
   qualities: PropTypes.arrayOf(
     PropTypes.string.isRequired,

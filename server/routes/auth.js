@@ -3,8 +3,10 @@ import serverError from "../utils/serverError.js";
 import User from "../models/User.js";
 import tokenService from "../services/tokenService.js";
 import bcrypt from 'bcryptjs';
-import {check, validationResult} from "express-validator";
+import {Result, check, validationResult} from "express-validator";
 import sendAuthError from "../utils/sendAuthError.js";
+import { striderProf } from "../constants/guest.js";
+import removeComments from "../utils/removeComments.js";
 
 const router = express.Router({ mergeParams: true });
 const signUpValidations = [
@@ -118,6 +120,15 @@ async function token(req, res) {
         const tokenIsInvalid = (!data || !dbToken || data._id !== dbToken?.user?.toString());
         if (tokenIsInvalid) return sendAuthError(res);
 
+        const user = await User.findById(dbToken?.user);
+        const isGuest = user?.profession?.toString() === striderProf;
+        if (isGuest) {
+            await User.findByIdAndDelete(user._id);
+            await tokenService.removeTokens(user._id);
+            await removeComments(user._id);
+            
+            return res.status(404).json({ message: 'Пользователь не существует' });
+        }
         const tokens = tokenService.generate({ _id: data._id });
         await tokenService.save(data._id, tokens.refreshToken);
 

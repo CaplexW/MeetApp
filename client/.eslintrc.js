@@ -35,5 +35,6 @@ module.exports = {
     'no-use-before-define': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
     'import/no-relative-packages': 'off',
+    // 'linebreak-style': '',
   },
 };
