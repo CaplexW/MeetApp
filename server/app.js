@@ -14,12 +14,13 @@ const { __dirname } = getPath(import.meta);
 const PORT = config.get('port') ?? 8080;
 const clientPath = join(__dirname, 'client');
 const indexPath = join(clientPath, 'index.html');
+const isProductionMode = process.env.NODE_ENV === 'production';
 
 app.use(express.json());
 app.use(express.urlencoded( { extended: false }));
 app.use(cors());
 app.use('/api', routes);
-if (process.env.NODE_ENV === 'production') {
+if (isProductionMode) {
     app.use('/', express.static(clientPath));
     app.get('*', sendIndex);
 }
@@ -39,6 +40,5 @@ async function start() {
     }
 }
 async function sendIndex(req, res) {
-    console.log('sending index page');
     res.sendFile(indexPath);
 }
